@@ -13,6 +13,7 @@ public enum ExceptionCode {
     /* 400 BAD_REQUEST : 잘못된 요청 */
     VALIDATION_ERROR(BAD_REQUEST, "이메일과 닉네임은 필수 항목입니다."),
     DUPLICATE_ERROR(BAD_REQUEST, "이메일과 닉네임의 중복확인이 필요합니다."),
+    ALREADY_FOLLOW(BAD_REQUEST, "이미 팔로우 중인 사용자입니다."),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
     TOKEN_EXPIRED(UNAUTHORIZED, "토큰이 만료됐습니다."),
