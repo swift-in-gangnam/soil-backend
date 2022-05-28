@@ -2,9 +2,6 @@ package com.swift.soil.controller;
 
 import com.swift.soil.common.BaseResponse;
 import com.swift.soil.common.ResponseCode;
-import com.swift.soil.entity.user.User;
-import com.swift.soil.exception.CustomException;
-import com.swift.soil.exception.ExceptionCode;
 import com.swift.soil.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +17,7 @@ public class AuthController extends DecodingUid {
     @PostMapping("/login")
     public ResponseEntity<BaseResponse> login(@RequestHeader(value = "Authorization") String auth, @RequestBody String fcmToken) {
         String uid = tokenDecoding(auth);
-
-        User user = userService.getUserInfo(uid).orElseThrow(() -> new CustomException(ExceptionCode.MEMBER_NOT_FOUND));
-        user.updateFcmToken(fcmToken);
-        userService.update(user);
-
+        login(uid, fcmToken);
         return BaseResponse.toResponseEntity(ResponseCode.LOGIN_SUCCESS);
 
     }
@@ -32,11 +25,7 @@ public class AuthController extends DecodingUid {
     @PostMapping("/logout")
     public ResponseEntity<BaseResponse> logout(@RequestHeader(value = "Authorization") String auth) {
         String uid = tokenDecoding(auth);
-
-        User user = userService.getUserInfo(uid).orElseThrow(() -> new CustomException(ExceptionCode.MEMBER_NOT_FOUND));
-        user.updateFcmToken("logout");
-        userService.update(user);
-
+        logout(uid);
         return BaseResponse.toResponseEntity(ResponseCode.LOGOUT_SUCCESS);
     }
 

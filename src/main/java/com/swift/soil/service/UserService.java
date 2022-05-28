@@ -1,9 +1,12 @@
 package com.swift.soil.service;
 
 import com.swift.soil.dto.user.request.SaveUserReq;
+import com.swift.soil.dto.user.response.FindUserRes;
 import com.swift.soil.dto.user.response.SaveUserRes;
 import com.swift.soil.entity.user.User;
 import com.swift.soil.entity.user.UserRepository;
+import com.swift.soil.exception.CustomException;
+import com.swift.soil.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,42 @@ public class UserService {
     private final UserRepository userRepository;
     private final FileService fileService;
 
+    /*
+    * AuthController
+    */
+    public void login(String uid, String fcmToken) {
+        Optional<User> user = userRepository.getUserByUid(uid);
+
+        if (user.isEmpty()) {
+            throw new CustomException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+
+        user.get().updateFcmToken(fcmToken);
+        userRepository.save(user.get());
+    }
+
+    public void logout(String uid) {
+        Optional<User> user = userRepository.getUserByUid(uid);
+
+        if (user.isEmpty()) {
+            throw new CustomException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+
+        user.get().updateFcmToken("logout");
+        userRepository.save(user.get());
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
+    public Optional<User> getUserByNickName(String nickName) {
+        return userRepository.getUserByNickname(nickName);
+    }
+
+    /*
+    * UserController
+    */
     public SaveUserRes createUser(MultipartFile multipartFile, SaveUserReq saveUserReq) {
         if (!multipartFile.isEmpty())
             saveUserReq.setProfileImageUrl(fileService.uploadFile(multipartFile));
@@ -29,21 +68,18 @@ public class UserService {
         return SaveUserRes.of(user);
     }
 
-    public Optional<User> getUserInfo(String uid) {
-        return userRepository.getUserByUid(uid);
-    }
+    public FindUserRes getUserInfo(String uid) {
+        Optional<User> user = userRepository.getUserByUid(uid);
 
-    public User update(User user) {
-        return userRepository.save(user);
-    }
+        if (user.isEmpty()) {
+            throw new CustomException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
 
-    /*
-    * 중복확인 관련 로직*/
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
-    }
+        FindUserRes findUserRes = FindUserRes.of(user.get());
 
-    public Optional<User> getUserByNickName(String nickName) {
-        return userRepository.getUserByNickname(nickName);
+        if (!user.get().getProfileImageUrl().equals("empty"))
+            findUserRes.setProfileImageUrl(fileService.getFileUrl(user.get().getProfileImageUrl()));
+
+        return findUserRes;
     }
 }
