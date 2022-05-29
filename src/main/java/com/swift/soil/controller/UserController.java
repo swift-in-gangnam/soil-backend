@@ -3,6 +3,7 @@ package com.swift.soil.controller;
 import com.swift.soil.common.BaseResponse;
 import com.swift.soil.common.ResponseCode;
 import com.swift.soil.dto.user.request.SaveUserReq;
+import com.swift.soil.dto.user.request.UpdateUserReq;
 import com.swift.soil.dto.user.response.FindUserRes;
 import com.swift.soil.service.FollowService;
 import com.swift.soil.service.UserService;
@@ -33,20 +34,25 @@ public class UserController extends DecodingUid {
         FindUserRes findUser = userService.getUserInfo(userUid);
 
         /*
-        * 1 = 본인
-        * 2 = 팔로우
-        * 3 = 팔로우 x
-        */
-        if (uid.equals(userUid)) {
+         * 1 = 본인
+         * 2 = 팔로우
+         * 3 = 팔로우 x
+         */
+        if (uid.equals(userUid))
             findUser.setType(1);
-        }
         else {
             if (followService.isFollow(uid, userUid)) {
                 findUser.setType(2);
-            }
-            else
+            } else
                 findUser.setType(3);
         }
         return BaseResponse.toResponseEntity(findUser, ResponseCode.GET_USER_SUCCESS);
+    }
+
+    @PatchMapping("")
+    public ResponseEntity<BaseResponse> updateProfile(@RequestHeader(value = "Authorization") String auth, UpdateUserReq updateUserReq, @RequestParam(value = "file") MultipartFile multipartFile) {
+        String uid = tokenDecoding(auth);
+        userService.updateProfile(uid, updateUserReq, multipartFile);
+        return BaseResponse.toResponseEntity(ResponseCode.UPDATE_USER_SUCCESS);
     }
 }

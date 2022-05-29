@@ -60,6 +60,15 @@ public class User extends BaseTimeEntity {
         this.fcmToken = fcmToken;
     }
 
+    public void updateImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public void updateProfile(String name, String bio) {
+        this.name = name;
+        this.bio = bio;
+    }
+
     public static User create(SaveUserReq saveUserReq) {
         return User.builder()
                 .uid(saveUserReq.getUid())
