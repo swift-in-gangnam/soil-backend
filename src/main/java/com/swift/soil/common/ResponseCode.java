@@ -24,7 +24,10 @@ public enum ResponseCode {
     LOGIN_SUCCESS(OK, "로그인 완료했습니다."),
     LOGOUT_SUCCESS(OK, "로그아웃 완료했습니다."),
     JOIN_SUCCESS(OK, "회원가입 완료했습니다"),
-    GET_USER_SUCCESS(OK, "유저정보 조회 완료했습니다")
+    GET_USER_SUCCESS(OK, "유저정보 조회 완료했습니다"),
+    UPDATE_USER_SUCCESS(OK, "유저의 정보를 성공적으로 변경했습니다."),
+    FOLLOW_SUCCESS(OK, "팔로잉 완료했습니다."),
+    UNFOLLOW_SUCCESS(OK, "언팔로잉 완료했습니다")
 
 
     ;

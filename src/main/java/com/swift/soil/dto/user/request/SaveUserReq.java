@@ -1,7 +1,6 @@
 package com.swift.soil.dto.user.request;
 
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 
 @Data
