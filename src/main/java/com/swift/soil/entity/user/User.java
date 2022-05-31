@@ -7,14 +7,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "users")
 @Entity
 public class User extends BaseTimeEntity {
 
@@ -43,10 +42,10 @@ public class User extends BaseTimeEntity {
     private String fcmToken;
 
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
-    private List<Follow> followingList;
+    private final List<Follow> followingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
-    private List<Follow> followerList;
+    private final List<Follow> followerList = new ArrayList<>();
 
     public int getFollowerCnt() {
         return this.followerList.size();

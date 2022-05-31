@@ -21,6 +21,7 @@ public class UserController extends DecodingUid {
     private final UserService userService;
     private final FollowService followService;
 
+    // 회원가입
     @PostMapping("")
     public ResponseEntity<BaseResponse> join(@RequestHeader(value = "Authorization") String auth, @Valid SaveUserReq saveUserReq, @RequestParam(value = "file") MultipartFile multipartFile) {
         saveUserReq.setUid(tokenDecoding(auth));
@@ -28,6 +29,7 @@ public class UserController extends DecodingUid {
         return BaseResponse.toResponseEntity(ResponseCode.JOIN_SUCCESS);
     }
 
+    // 사용자 조회
     @GetMapping("/{userUid}")
     public ResponseEntity<BaseResponse> getUser(@RequestHeader(value = "Authorization") String auth, @PathVariable String userUid) {
         String uid = tokenDecoding(auth);
@@ -49,6 +51,7 @@ public class UserController extends DecodingUid {
         return BaseResponse.toResponseEntity(findUser, ResponseCode.GET_USER_SUCCESS);
     }
 
+    // 사용자 프로필 변경
     @PatchMapping("")
     public ResponseEntity<BaseResponse> updateProfile(@RequestHeader(value = "Authorization") String auth, UpdateUserReq updateUserReq, @RequestParam(value = "file") MultipartFile multipartFile) {
         String uid = tokenDecoding(auth);
