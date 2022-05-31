@@ -1,9 +1,8 @@
 package com.swift.soil.dto.post.request;
 
 import com.swift.soil.entity.user.User;
-import lombok.Builder;
 import lombok.Data;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,17 +16,9 @@ public class SavePostReq {
 
     private String imageUrl;
 
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
 
     private String song;
 
     private User user;
-
-    @Builder
-    public SavePostReq(String title, boolean isSecret, String content, String song) {
-        this.title = title;
-        this.isSecret = isSecret;
-        this.content = content;
-        this.song = song;
-    }
 }
