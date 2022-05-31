@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BaseResponse<T> {
+public class BaseResponse {
 
     private final int code;
     private final Boolean success;

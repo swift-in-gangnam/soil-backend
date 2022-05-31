@@ -14,20 +14,28 @@ import static org.springframework.http.HttpStatus.OK;
 @AllArgsConstructor
 public enum ResponseCode {
 
-    /*
-    * 중복 체크*/
+    // AuthController
     DUPLICATE_EMAIL(BAD_REQUEST, "이미 사용중인 이메일입니다."),
     NOT_DUPLICATE_EMAIL(OK, "사용 가능한 이메일입니다."),
     DUPLICATE_NICKNAME(BAD_REQUEST, "이미 사용중인 닉네임입니다."),
     NOT_DUPLICATE_NICKNAME(OK, "사용 가능한 닉네임입니다."),
-
     LOGIN_SUCCESS(OK, "로그인 완료했습니다."),
     LOGOUT_SUCCESS(OK, "로그아웃 완료했습니다."),
+
+    // UserController
     JOIN_SUCCESS(OK, "회원가입 완료했습니다"),
     GET_USER_SUCCESS(OK, "유저정보 조회 완료했습니다"),
     UPDATE_USER_SUCCESS(OK, "유저의 정보를 성공적으로 변경했습니다."),
+    SEARCH_USER_SUCCESS(OK, "유저 검색을 완료했습니다"),
+
+    // FollowController
     FOLLOW_SUCCESS(OK, "팔로잉 완료했습니다."),
-    UNFOLLOW_SUCCESS(OK, "언팔로잉 완료했습니다")
+    UNFOLLOW_SUCCESS(OK, "언팔로잉 완료했습니다"),
+    GET_FOLLOWER(OK, "팔로워 목록을 불러왔습니다."),
+    GET_FOLLOWING(OK, "팔로잉 목록을 불러왔습니다."),
+
+    // PostController
+    UPLOAD_POST_SUCCESS(OK, "포스트 업로드를 완료했습니다.")
 
 
     ;
