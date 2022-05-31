@@ -1,19 +1,19 @@
 package com.swift.soil.entity.post;
 
 import com.swift.soil.dto.post.request.SavePostReq;
-import com.swift.soil.dto.user.request.SaveUserReq;
+import com.swift.soil.entity.tag.TagPost;
 import com.swift.soil.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "posts")
 @Entity
 public class Post {
 
@@ -38,6 +38,12 @@ public class Post {
     private boolean isSecret;
 
     private String song;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @OneToMany(mappedBy = "post")
+    private final List<TagPost> tagList = new ArrayList<>();
 
     public static Post create(SavePostReq savepostReq) {
         return Post.builder()
