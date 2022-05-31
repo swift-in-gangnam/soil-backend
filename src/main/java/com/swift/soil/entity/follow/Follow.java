@@ -10,7 +10,6 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "follows")
 @Entity
 public class Follow {
 
