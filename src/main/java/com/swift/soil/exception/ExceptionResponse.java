@@ -10,18 +10,15 @@ import java.time.LocalDateTime;
 @Builder
 public class ExceptionResponse {
     private final LocalDateTime timestamp = LocalDateTime.now();
-    private final int status;
-    private final String error;
-    private final String code;
+    private final int statusCode;
+    private final Boolean success;
     private final String message;
 
     public static ResponseEntity<ExceptionResponse> toResponseEntity(ExceptionCode errorCode) {
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
                 .body(ExceptionResponse.builder()
-                        .status(errorCode.getHttpStatus().value())
-                        .error(errorCode.getHttpStatus().name())
-                        .code(errorCode.name())
+                        .success(false)
                         .message(errorCode.getMessage())
                         .build()
                 );
