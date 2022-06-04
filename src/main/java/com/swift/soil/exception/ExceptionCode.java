@@ -15,6 +15,7 @@ public enum ExceptionCode {
     DUPLICATE_ERROR(BAD_REQUEST, "이메일과 닉네임의 중복확인이 필요합니다."),
     ALREADY_FOLLOW(BAD_REQUEST, "이미 팔로우 중인 사용자입니다."),
     NOT_FOLLOW(BAD_REQUEST, "팔로우 중인 사용자가 아닙니다"),
+    SEARCH_TYPE_ERROR(BAD_REQUEST, "검색 유형을 올바르지 않습니다."),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
     TOKEN_EXPIRED(UNAUTHORIZED, "토큰이 만료됐습니다."),

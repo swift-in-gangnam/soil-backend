@@ -26,7 +26,6 @@ public enum ResponseCode {
     JOIN_SUCCESS(OK, "회원가입 완료했습니다"),
     GET_USER_SUCCESS(OK, "유저정보 조회 완료했습니다"),
     UPDATE_USER_SUCCESS(OK, "유저의 정보를 성공적으로 변경했습니다."),
-    SEARCH_USER_SUCCESS(OK, "유저 검색을 완료했습니다"),
 
     // FollowController
     FOLLOW_SUCCESS(OK, "팔로잉 완료했습니다."),
@@ -35,10 +34,17 @@ public enum ResponseCode {
     GET_FOLLOWING(OK, "팔로잉 목록을 불러왔습니다."),
 
     // PostController
-    UPLOAD_POST_SUCCESS(OK, "포스트 업로드를 완료했습니다.")
+    UPLOAD_POST_SUCCESS(OK, "포스트 업로드를 완료했습니다."),
+    GET_DETAIL_POST_SUCCESS(OK, "포스트 상세조회를 완료했습니다."),
+
+    // SearchController
+    SEARCH_USER_SUCCESS(OK, "유저 검색을 완료했습니다"),
+    SEARCH_TAG_SUCCESS(OK, "태그 검색을 완료했습니다"),
 
 
-    ;
+
+
+            ;
 
     private final HttpStatus httpStatus;
     private final String message;

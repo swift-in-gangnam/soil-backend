@@ -3,6 +3,7 @@ package com.swift.soil.service;
 import com.swift.soil.dto.user.request.SaveUserReq;
 import com.swift.soil.dto.user.request.UpdateUserReq;
 import com.swift.soil.dto.user.response.FindUserRes;
+import com.swift.soil.dto.user.response.SearchUserRes;
 import com.swift.soil.entity.user.User;
 import com.swift.soil.entity.user.UserRepository;
 import com.swift.soil.exception.CustomException;
@@ -11,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -100,8 +101,15 @@ public class UserService {
     }
 
     // SearchController
-    public List<FindUserRes> searchUser(String keyword) {
-        return userRepository.findTop20ByNicknameStartsWith(keyword).stream()
-                .map(FindUserRes::of).collect(Collectors.toList());
+    public List<SearchUserRes> searchUser(String keyword) {
+        List<SearchUserRes> result = new ArrayList<>();
+        for (User user : userRepository.findTop20ByNicknameStartsWith(keyword)) {
+            SearchUserRes searchUserRes = SearchUserRes.of(user);
+
+            if (!user.getProfileImageUrl().equals("empty"))
+                searchUserRes.setProfileImageUrl(fileService.getFileUrl(user.getProfileImageUrl()));
+            result.add(searchUserRes);
+        }
+        return result;
     }
 }
