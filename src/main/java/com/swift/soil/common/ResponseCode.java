@@ -36,6 +36,7 @@ public enum ResponseCode {
     // PostController
     UPLOAD_POST_SUCCESS(OK, "포스트 업로드를 완료했습니다."),
     GET_DETAIL_POST_SUCCESS(OK, "포스트 상세조회를 완료했습니다."),
+    ADD_EMOJI_SUCCESS(OK, "이모지 반응에 성공하였습니다."),
 
     // SearchController
     SEARCH_USER_SUCCESS(OK, "유저 검색을 완료했습니다"),

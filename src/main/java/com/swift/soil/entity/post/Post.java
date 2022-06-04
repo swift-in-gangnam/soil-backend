@@ -1,6 +1,7 @@
 package com.swift.soil.entity.post;
 
 import com.swift.soil.dto.post.request.SavePostReq;
+import com.swift.soil.entity.emoji.Emoji;
 import com.swift.soil.entity.tag.TagPost;
 import com.swift.soil.entity.user.User;
 import lombok.AccessLevel;
@@ -41,6 +42,13 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Emoji emoji;
+
+    public void createEmoji() {
+        this.emoji = new Emoji();
+    }
 
     @OneToMany(mappedBy = "post")
     private final List<TagPost> tagList = new ArrayList<>();
