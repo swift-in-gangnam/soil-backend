@@ -3,7 +3,6 @@ package com.swift.soil.exception;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,6 +17,7 @@ public class ExceptionResponse {
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
                 .body(ExceptionResponse.builder()
+                        .statusCode(errorCode.getHttpStatus().value())
                         .success(false)
                         .message(errorCode.getMessage())
                         .build()
