@@ -43,16 +43,7 @@ public class FollowService {
                 .toUser(toUser.get())
                 .build());
 
-        FindUserRes findUserRes = FindUserRes.builder()
-                .uid(follow.getToUser().getUid())
-                .nickname(follow.getToUser().getNickname())
-                .name(follow.getToUser().getName())
-                .bio(follow.getToUser().getBio())
-                .profileImageUrl(follow.getToUser().getProfileImageUrl())
-                .followingCnt(follow.getToUser().getFollowingCnt())
-                .followerCnt(follow.getToUser().getFollowerCnt())
-                .build();
-
+        FindUserRes findUserRes = FindUserRes.of(follow.getToUser());
         findUserRes.setType(2); // 팔로우 했기 때문에 2로 설정
 
         if (!follow.getToUser().getProfileImageUrl().equals("empty"))
