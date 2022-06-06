@@ -1,7 +1,6 @@
 package com.swift.soil.dto.post.response;
 
 import com.swift.soil.entity.emoji.Emoji;
-import com.swift.soil.entity.post.Post;
 import lombok.Builder;
 import lombok.Data;
 
