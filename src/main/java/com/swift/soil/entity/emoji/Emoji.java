@@ -1,5 +1,6 @@
 package com.swift.soil.entity.emoji;
 
+import com.swift.soil.entity.post.Post;
 import lombok.Getter;
 import javax.persistence.*;
 
@@ -18,6 +19,13 @@ public class Emoji {
     private int emoji5;
     private int emoji6;
     private int emoji7;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Post post;
+
+    public void mappingPost(Post post) {
+        this.post = post;
+    }
 
     public void upEmoji(Integer emojiType) {
         if (emojiType == 1) this.emoji1++;

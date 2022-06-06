@@ -3,6 +3,7 @@ package com.swift.soil.entity.user;
 import com.swift.soil.dto.user.request.SaveUserReq;
 import com.swift.soil.entity.BaseTimeEntity;
 import com.swift.soil.entity.follow.Follow;
+import com.swift.soil.entity.post.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,11 +42,14 @@ public class User extends BaseTimeEntity {
 
     private String fcmToken;
 
-    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.REMOVE)
     private final List<Follow> followingList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.REMOVE)
     private final List<Follow> followerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private final List<Post> postList = new ArrayList<>();
 
     public int getFollowerCnt() {
         return this.followerList.size();

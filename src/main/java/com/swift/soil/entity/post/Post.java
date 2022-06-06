@@ -43,15 +43,16 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private Emoji emoji;
-
-    public void createEmoji() {
-        this.emoji = new Emoji();
-    }
 
     @OneToMany(mappedBy = "post")
     private final List<TagPost> tagList = new ArrayList<>();
+
+    public void mappingEmoji(Emoji emoji) {
+        this.emoji = emoji;
+        emoji.mappingPost(this);
+    }
 
     public static Post create(SavePostReq savepostReq) {
         return Post.builder()
@@ -60,13 +61,14 @@ public class Post {
                 .content(savepostReq.getContent())
                 .profileImageUrl(savepostReq.getImageUrl())
                 .song(savepostReq.getSong())
+                .user(savepostReq.getUser())
                 .created(LocalDate.now())
                 .modified(LocalDate.now())
                 .build();
     }
 
     @Builder
-    public Post(String title, String content, String profileImageUrl, LocalDate created, LocalDate modified, boolean isReported, boolean isBlocked, boolean isSecret, String song) {
+    public Post(String title, String content, String profileImageUrl, LocalDate created, LocalDate modified, boolean isReported, boolean isBlocked, boolean isSecret, String song, User user) {
         this.title = title;
         this.content = content;
         this.profileImageUrl = profileImageUrl;
@@ -76,5 +78,6 @@ public class Post {
         this.isBlocked = isBlocked;
         this.isSecret = isSecret;
         this.song = song;
+        this.user = user;
     }
 }
