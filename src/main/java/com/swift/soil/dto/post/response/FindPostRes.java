@@ -5,7 +5,7 @@ import com.swift.soil.entity.emoji.Emoji;
 import com.swift.soil.entity.post.Post;
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class FindPostRes {
     private String postImageUrl;
 
     @JsonProperty("post_created_time")
-    private LocalDate postCreatedTime;
+    private LocalDateTime postCreatedTime;
 
     @JsonProperty("post_song")
     private String postSong;
@@ -48,7 +48,7 @@ public class FindPostRes {
     }
 
     @Builder
-    public FindPostRes(Long userId, String postTitle, String postContent, String postImageUrl, LocalDate postCreatedTime, String postSong, Emoji emoji) {
+    public FindPostRes(Long userId, String postTitle, String postContent, String postImageUrl, LocalDateTime postCreatedTime, String postSong, Emoji emoji) {
         this.userId = userId;
         this.postTitle = postTitle;
         this.postContent = postContent;

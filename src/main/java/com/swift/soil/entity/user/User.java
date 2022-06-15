@@ -38,8 +38,6 @@ public class User extends BaseTimeEntity {
 
     private String bio;
 
-    private LocalDate modified;
-
     private String fcmToken;
 
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.REMOVE)
@@ -79,19 +77,17 @@ public class User extends BaseTimeEntity {
                 .nickname(saveUserReq.getNickname())
                 .name(saveUserReq.getName())
                 .profileImageUrl(saveUserReq.getProfileImageUrl())
-                .modified(LocalDate.now())
                 .build();
     }
 
     @Builder
-    public User(String uid, String email, String nickname, String name, String profileImageUrl, String bio, LocalDate modified, String fcmToken) {
+    public User(String uid, String email, String nickname, String name, String profileImageUrl, String bio, String fcmToken) {
         this.uid = uid;
         this.email = email;
         this.nickname = nickname;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
         this.bio = bio;
-        this.modified = modified;
         this.fcmToken = fcmToken;
     }
 }
