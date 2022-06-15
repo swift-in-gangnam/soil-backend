@@ -17,7 +17,7 @@ public class AuthController extends DecodingUid {
     @PostMapping("/login")
     public ResponseEntity<BaseResponse> login(@RequestHeader(value = "Authorization") String auth, @RequestBody String fcmToken) {
         String uid = tokenDecoding(auth);
-        login(uid, fcmToken);
+        userService.login(uid, fcmToken);
         return BaseResponse.toResponseEntity(ResponseCode.LOGIN_SUCCESS);
 
     }
@@ -25,7 +25,7 @@ public class AuthController extends DecodingUid {
     @PostMapping("/logout")
     public ResponseEntity<BaseResponse> logout(@RequestHeader(value = "Authorization") String auth) {
         String uid = tokenDecoding(auth);
-        logout(uid);
+        userService.logout(uid);
         return BaseResponse.toResponseEntity(ResponseCode.LOGOUT_SUCCESS);
     }
 
