@@ -19,6 +19,8 @@ public class Tag {
 
     private String tagName;
 
+    private int tagCnt;
+
     @OneToMany(mappedBy = "tag")
     private final List<TagPost> PostList = new ArrayList<>();
 
@@ -28,8 +30,17 @@ public class Tag {
                 .build();
     }
 
+    public void upCnt() {
+        this.tagCnt++;
+    }
+
+    public int downCnt() {
+        return this.tagCnt--;
+    }
+
     @Builder
     public Tag(String tagName) {
         this.tagName = tagName;
+        this.tagCnt = 1;
     }
 }

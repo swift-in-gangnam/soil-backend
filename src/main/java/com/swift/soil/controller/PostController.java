@@ -49,4 +49,11 @@ public class PostController extends DecodingUid {
         postService.addEmoji(emojiReq);
         return BaseResponse.toResponseEntity(ResponseCode.ADD_EMOJI_SUCCESS);
     }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<BaseResponse> deletePost(@RequestHeader(value = "Authorization") String auth, @PathVariable Long postId) {
+        tokenDecoding(auth);
+        postService.deletePost(postId);
+        return BaseResponse.toResponseEntity(ResponseCode.DELETE_POST_SUCCESS);
+    }
 }

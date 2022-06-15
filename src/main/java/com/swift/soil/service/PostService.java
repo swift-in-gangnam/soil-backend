@@ -5,7 +5,6 @@ import com.swift.soil.dto.post.request.SavePostReq;
 import com.swift.soil.dto.post.response.FindPostRes;
 import com.swift.soil.dto.post.response.FindTagRes;
 import com.swift.soil.entity.emoji.Emoji;
-import com.swift.soil.entity.emoji.EmojiRepository;
 import com.swift.soil.entity.post.Post;
 import com.swift.soil.entity.post.PostRepository;
 import com.swift.soil.entity.tag.Tag;
@@ -35,7 +34,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final TagPostRepository tagPostRepository;
     private final TagRepository tagRepository;
-    private final EmojiRepository emojiRepository;
     private final FileService fileService;
 
     //PostController
@@ -60,13 +58,16 @@ public class PostService {
                 if (tagName.length() == 0)
                     continue;
                 // 생성되어 있는 태그가 없다면 생성
-                if (tagRepository.getTagByTagName(tagName).isEmpty()) {
+                Optional<Tag> tag = tagRepository.getTagByTagName(tagName);
+                if (tag.isEmpty()) {
                     Tag t = tagRepository.save(Tag.create(tagName));
                     tagPostRepository.save(new TagPost(post, t));
                 }
                 // 생성되어 있으면 바로 매핑
-                else
-                    tagPostRepository.save(new TagPost(post, tagRepository.getTagByTagName(tagName).get()));
+                else {
+                    tag.get().upCnt();
+                    tagPostRepository.save(new TagPost(post, tag.get()));
+                }
             }
         }
     }
@@ -81,7 +82,7 @@ public class PostService {
                 findPostRes.setPostImageUrl(fileService.getFileUrl(p.getProfileImageUrl()));
 
             for (TagPost t : p.getTagList())
-                findPostRes.getTags().add(new FindTagRes(t.getTag().getTagName()));
+                findPostRes.getTags().add(new FindTagRes(t.getTag().getTagName(), t.getTag().getTagCnt()));
             findPostResList.add(findPostRes);
         }
         return findPostResList;
@@ -95,7 +96,7 @@ public class PostService {
             findPostRes.setPostImageUrl(fileService.getFileUrl(post.getProfileImageUrl()));
 
         for (TagPost t : post.getTagList())
-            findPostRes.getTags().add(new FindTagRes(t.getTag().getTagName()));
+            findPostRes.getTags().add(new FindTagRes(t.getTag().getTagName(), t.getTag().getTagCnt()));
         return findPostRes;
     }
 
@@ -103,5 +104,19 @@ public class PostService {
         Post post = postRepository.getById(emojiReq.getPostId());
         post.getEmoji().upEmoji(emojiReq.getEmojiType());
         postRepository.save(post);
+    }
+
+    public void deletePost(Long postId) {
+        List<TagPost> tagPostList = postRepository.getById(postId).getTagList();
+
+        for (TagPost tp : tagPostList) {
+            Tag t = tp.getTag();
+            t.downCnt();
+            if (t.getTagCnt() == 0) {
+                tagRepository.delete(t);
+            }
+            tagRepository.save(tp.getTag());
+        }
+        postRepository.delete(postRepository.getById(postId));
     }
 }
