@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,17 +76,17 @@ public class User extends BaseTimeEntity {
                 .nickname(saveUserReq.getNickname())
                 .name(saveUserReq.getName())
                 .profileImageUrl(saveUserReq.getProfileImageUrl())
+                .fcmToken(saveUserReq.getFcmToken())
                 .build();
     }
 
     @Builder
-    public User(String uid, String email, String nickname, String name, String profileImageUrl, String bio, String fcmToken) {
+    public User(String uid, String email, String nickname, String name, String profileImageUrl, String fcmToken) {
         this.uid = uid;
         this.email = email;
         this.nickname = nickname;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
-        this.bio = bio;
         this.fcmToken = fcmToken;
     }
 }

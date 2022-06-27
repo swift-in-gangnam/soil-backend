@@ -17,4 +17,6 @@ public class SaveUserReq {
     private String name;
 
     private String profileImageUrl;
+
+    private String fcmToken;
 }
