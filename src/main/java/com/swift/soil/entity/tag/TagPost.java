@@ -1,5 +1,6 @@
 package com.swift.soil.entity.tag;
 
+import com.swift.soil.entity.BaseTimeEntity;
 import com.swift.soil.entity.post.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class TagPost {
+public class TagPost extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

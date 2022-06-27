@@ -4,7 +4,7 @@ import com.swift.soil.common.BaseResponse;
 import com.swift.soil.common.ResponseCode;
 import com.swift.soil.exception.CustomException;
 import com.swift.soil.exception.ExceptionCode;
-import com.swift.soil.service.TagService;
+import com.swift.soil.service.SearchService;
 import com.swift.soil.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController extends DecodingUid {
 
     private final UserService userService;
-    private final TagService tagService;
+    private final SearchService tagService;
 
     // 사용자 닉네임 목록 및 태그 목록 검색
     @GetMapping("")

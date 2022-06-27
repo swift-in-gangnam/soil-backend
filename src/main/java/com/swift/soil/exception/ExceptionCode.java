@@ -21,7 +21,8 @@ public enum ExceptionCode {
     TOKEN_EXPIRED(UNAUTHORIZED, "토큰이 만료됐습니다."),
 
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
-    MEMBER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
+    MEMBER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다."),
+    TAG_NOT_FOUND(NOT_FOUND, "해당 태그가 포함된 포스트가 존재하지 않습니다."),
     TOKEN_NOT_IN_HEADER(NOT_FOUND, "헤더에 토큰 정보가 없습니다."),
 
     /* 409 CONFLICT : 중복된 데이터 존재 */
