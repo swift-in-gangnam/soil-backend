@@ -29,25 +29,25 @@ public class AuthController extends DecodingUid {
         return BaseResponse.toResponseEntity(ResponseCode.LOGOUT_SUCCESS);
     }
 
-    @GetMapping("/auth/dupEmail/{email}")
+    @GetMapping("/dupEmail/{email}")
     public ResponseEntity<BaseResponse> dupEmail(@PathVariable String email) {
         try {
             userService.getUserByEmail(email).orElseThrow(() -> new IllegalArgumentException());
         }
         catch (IllegalArgumentException e) {
-            return BaseResponse.toResponseEntity(ResponseCode.DUPLICATE_EMAIL);
+            return BaseResponse.toResponseEntity(ResponseCode.NOT_DUPLICATE_EMAIL);
         }
-        return BaseResponse.toResponseEntity(ResponseCode.NOT_DUPLICATE_EMAIL);
+        return BaseResponse.toResponseEntity(ResponseCode.DUPLICATE_EMAIL);
     }
 
-    @GetMapping("/auth/dupNickname/{nickname}")
+    @GetMapping("/dupNickname/{nickname}")
     public ResponseEntity<BaseResponse> dupNickname(@PathVariable String nickname) {
         try {
             userService.getUserByNickName(nickname).orElseThrow(() -> new IllegalArgumentException());
         }
         catch (IllegalArgumentException e) {
-            return BaseResponse.toResponseEntity(ResponseCode.DUPLICATE_NICKNAME);
+            return BaseResponse.toResponseEntity(ResponseCode.NOT_DUPLICATE_NICKNAME);
         }
-        return BaseResponse.toResponseEntity(ResponseCode.NOT_DUPLICATE_NICKNAME);
+        return BaseResponse.toResponseEntity(ResponseCode.DUPLICATE_NICKNAME);
     }
 }
