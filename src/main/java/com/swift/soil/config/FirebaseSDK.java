@@ -14,7 +14,6 @@ public class FirebaseSDK {
     @PostConstruct
     public void init(){
         try {
-//            FileInputStream serviceAccount = new FileInputStream("src/main/resources/soil.json");
             FileInputStream serviceAccount = new FileInputStream("/home/ec2-user/config/soil.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
