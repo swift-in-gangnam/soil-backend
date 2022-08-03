@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import static com.swift.soil.exception.ExceptionCode.DUPLICATE_RESOURCE;
-import static com.swift.soil.exception.ExceptionCode.TOKEN_NOT_IN_HEADER;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -21,10 +20,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {CustomException.class})
     protected ResponseEntity<ExceptionResponse> handleCustomException(CustomException e) {
         return ExceptionResponse.toResponseEntity(e.getExceptionCode());
-    }
-
-    @ExceptionHandler(value = {IllegalArgumentException.class})
-    protected ResponseEntity<ExceptionResponse> TokenNotInHeaderException() {
-        return ExceptionResponse.toResponseEntity(TOKEN_NOT_IN_HEADER);
     }
 }

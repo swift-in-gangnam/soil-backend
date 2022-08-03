@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @RestController
@@ -15,9 +17,10 @@ public class AuthController extends DecodingUid {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<BaseResponse> login(@RequestHeader(value = "Authorization") String auth, @RequestBody String fcmToken) {
+    public ResponseEntity<BaseResponse> login(@RequestHeader(value = "Authorization") String auth, @RequestBody Map<String, String> param) {
+
         String uid = tokenDecoding(auth);
-        userService.login(uid, fcmToken);
+        userService.login(uid, param.get("fcmToken"));
         return BaseResponse.toResponseEntity(ResponseCode.LOGIN_SUCCESS);
 
     }

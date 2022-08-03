@@ -22,7 +22,7 @@ public class UserController extends DecodingUid {
     private final FollowService followService;
 
     // 회원가입
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<BaseResponse> join(@RequestHeader(value = "Authorization") String auth, @Valid SaveUserReq saveUserReq, @RequestParam(value = "file") MultipartFile multipartFile) {
         saveUserReq.setUid(tokenDecoding(auth));
         userService.createUser(multipartFile, saveUserReq);
